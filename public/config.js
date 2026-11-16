@@ -39,8 +39,7 @@ const CONFIG = {
   gallery: [
     { id:1, title:"Химчистка салона",   before:"gallery/1.1.webp", after:"gallery/1.2.webp" },
     { id:2, title:"Полировка кузова",   before:"gallery/2.1.webp", after:"gallery/2.2.webp" },
-    { id:3, title:"Комплекс S",         before:"gallery/3.1.webp", after:"gallery/3.2.webp" },
-    { id:4, title:"Нанокерамика",       before:"gallery/4.1.webp", after:"gallery/4.2.webp" },
+    { id:3, title:"Комплекс мойка",     before:"gallery/3.1.webp", after:"gallery/3.2.webp" },
   ],
 };
 
