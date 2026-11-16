@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кабинет владельца</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d1117;--bg2:#111820;--bg3:#161e28;--card:#131b24;
+  --border:#1e2d3d;--primary:#00d4aa;--primary-h:#00f0c0;
+  --danger:#ef4444;--warn:#f59e0b;--blue:#3b82f6;--green:#10b981;
+  --text:#fff;--text2:#a0b4c8;--text3:#4a6378;
+  --font-head:'Oswald',sans-serif;--font-body:'Roboto',sans-serif;
+}
+html{color-scheme:dark}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border)}
+
+/* ── LOGIN ── */
+#login-page{
+  display:flex;min-height:100vh;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(0,212,170,.06) 0%,transparent 70%);
+}
+.login-card{
+  background:var(--card);border:1px solid var(--border);padding:48px 40px;
+  width:100%;max-width:380px;
+  clip-path:polygon(10px 0%,100% 0%,100% calc(100% - 10px),calc(100% - 10px) 100%,0% 100%,0% 10px);
+}
+.login-logo{font-family:var(--font-head);font-size:20px;font-weight:700;letter-spacing:3px;color:var(--primary);margin-bottom:4px}
+.login-logo-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:32px}
+.login-card h2{font-family:var(--font-head);font-size:24px;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.fg input,.fg select{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:11px 14px;font-size:14px;font-family:var(--font-body);outline:none;transition:border-color .2s;border-radius:0}
+.fg input:focus,.fg select:focus{border-color:rgba(0,212,170,.5)}
+.btn-neon{
+  width:100%;padding:13px;background:var(--primary);border:1px solid var(--primary);
+  color:#0d1117;font-family:var(--font-head);font-size:14px;letter-spacing:3px;text-transform:uppercase;
+  font-weight:600;cursor:pointer;transition:all .2s;
+}
+.btn-neon:hover{background:var(--primary-h)}
+.login-err{color:var(--danger);font-size:12px;text-align:center;margin-top:12px;display:none}
+
+/* ── DASHBOARD ── */
+#dash-page{display:none}
+nav{
+  position:sticky;top:0;z-index:100;height:60px;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(13,17,23,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:var(--font-head);font-size:18px;letter-spacing:3px;color:var(--primary)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text3)}
+.btn-sm{padding:7px 18px;border:1px solid var(--border);background:transparent;color:var(--text3);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-family:var(--font-body);cursor:pointer;transition:all .2s}
+.btn-sm:hover{border-color:var(--danger);color:var(--danger)}
+.btn-sm.site{color:var(--primary);border-color:rgba(0,212,170,.3)}
+.btn-sm.site:hover{background:rgba(0,212,170,.08);border-color:var(--primary)}
+
+.dashboard{max-width:1140px;margin:0 auto;padding:32px 24px 80px}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.dash-title{font-family:var(--font-head);font-size:26px;letter-spacing:2px;text-transform:uppercase}
+.dash-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:28px}
+.stat-card{background:var(--card);border:1px solid var(--border);padding:20px 18px}
+.stat-card.c-green{border-left:2px solid var(--green)}
+.stat-card.c-blue{border-left:2px solid var(--blue)}
+.stat-card.c-warn{border-left:2px solid var(--warn)}
+.stat-card.c-prim{border-left:2px solid var(--primary)}
+.stat-card.c-red{border-left:2px solid var(--danger)}
+.stat-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.stat-num{font-family:var(--font-head);font-size:34px;font-weight:700;line-height:1}
+.stat-sub{font-size:12px;color:var(--text3);margin-top:5px}
+.stat-card.c-green .stat-num{color:var(--green)}
+.stat-card.c-blue .stat-num{color:var(--blue)}
+.stat-card.c-warn .stat-num{color:var(--warn)}
+.stat-card.c-prim .stat-num{color:var(--primary)}
+.stat-card.c-red .stat-num{color:var(--danger)}
+
+/* TABLE */
+.table-wrap{background:var(--card);border:1px solid var(--border)}
+.table-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.table-top-title{font-family:var(--font-head);font-size:16px;letter-spacing:2px;text-transform:uppercase}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap}
+.fbtn{padding:5px 14px;border:1px solid var(--border);background:transparent;color:var(--text3);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-family:var(--font-body);cursor:pointer;transition:all .2s;border-radius:0}
+.fbtn.active,.fbtn:hover{border-color:var(--primary);color:var(--primary);background:rgba(0,212,170,.05)}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{text-align:left;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text3);padding:12px 14px;border-bottom:1px solid var(--border);font-weight:400}
+td{padding:13px 14px;font-size:13px;border-bottom:1px solid rgba(30,45,61,.6);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,212,170,.02)}
+.badge{display:inline-block;padding:3px 10px;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-family:var(--font-body)}
+.badge.pending{background:rgba(245,158,11,.12);color:var(--warn);border:1px solid rgba(245,158,11,.2)}
+.badge.confirmed{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.2)}
+.badge.done{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.2)}
+.badge.cancelled{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.2)}
+.act-btn{padding:4px 10px;border:1px solid var(--border);background:transparent;color:var(--text3);font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:var(--font-body);margin:0 2px}
+.act-btn:hover{border-color:var(--primary);color:var(--primary)}
+.act-btn.del:hover{border-color:var(--danger);color:var(--danger)}
+.empty-row td{text-align:center;padding:48px;color:var(--text3)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;z-index:9999;padding:12px 18px;border:1px solid var(--border);background:var(--card);font-size:13px;box-shadow:0 12px 40px rgba(0,0,0,.7);transform:translateY(10px);opacity:0;transition:all .25s;pointer-events:none;max-width:280px}
+.toast.show{transform:none;opacity:1}
+.toast.ok{border-left:2px solid var(--primary)}
+.toast.err{border-left:2px solid var(--danger)}
+
+@media(max-width:600px){
+  nav{padding:0 16px}
+  .dashboard{padding:20px 12px 60px}
+  .login-card{margin:16px;padding:32px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-page">
+  <div class="login-card">
+    <div class="login-logo" id="ll-name">АККУРАТНО</div>
+    <div class="login-logo-sub" id="ll-sub">Автомойка &amp; Детейлинг</div>
+    <h2>Кабинет</h2>
+    <div class="fg">
+      <label>Пароль</label>
+      <input type="password" id="pass-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-neon" onclick="doLogin()">Войти</button>
+    <div class="login-err" id="login-err">Неверный пароль</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash-page">
+  <nav>
+    <div class="nav-logo" id="d-logo">АККУРАТНО</div>
+    <div class="nav-right">
+      <span class="nav-label">Кабинет владельца</span>
+      <a class="btn-sm site" href="index.html" target="_blank">На сайт</a>
+      <button class="btn-sm" onclick="logout()">Выйти</button>
+    </div>
+  </nav>
+  <div class="dashboard">
+    <div class="dash-header">
+      <div class="dash-title">Статистика</div>
+      <div class="dash-actions">
+        <button class="btn-sm" onclick="exportCSV()">Экспорт CSV</button>
+        <button class="btn-sm" style="border-color:rgba(239,68,68,.3);color:var(--danger)" onclick="clearAll()">Очистить всё</button>
+      </div>
+    </div>
+    <div class="stats-grid" id="stats-grid"></div>
+    <div class="table-wrap">
+      <div class="table-top">
+        <div class="table-top-title">Записи клиентов</div>
+        <div class="filter-row">
+          <button class="fbtn active" onclick="setFilter('all',this)">Все</button>
+          <button class="fbtn" onclick="setFilter('pending',this)">Ожидают</button>
+          <button class="fbtn" onclick="setFilter('confirmed',this)">Подтверждены</button>
+          <button class="fbtn" onclick="setFilter('done',this)">Выполнены</button>
+          <button class="fbtn" onclick="setFilter('cancelled',this)">Отменены</button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Клиент</th><th>Телефон</th><th>Авто / Тип</th>
+              <th>Услуга</th><th>Сумма</th><th>Дата / Время</th><th>Статус</th><th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="t-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script>
+let curFilter = 'all';
+
+// ── Storage ─────────────────────────────────
+function getBookings(){ try{return JSON.parse(localStorage.getItem('dp_bookings')||'[]')}catch{return[]} }
+function saveBookings(a){ localStorage.setItem('dp_bookings',JSON.stringify(a)) }
+
+// ── Login ────────────────────────────────────
+function doLogin(){
+  const v = document.getElementById('pass-input').value;
+  const err = document.getElementById('login-err');
+  if(v === CONFIG.company.adminPassword){
+    err.style.display='none';
+    document.getElementById('pass-input').value='';
+    document.getElementById('login-page').style.display='none';
+    document.getElementById('dash-page').style.display='block';
+    renderDash();
+  } else {
+    err.style.display='block';
+    document.getElementById('pass-input').value='';
+  }
+}
+function logout(){
+  document.getElementById('dash-page').style.display='none';
+  document.getElementById('login-page').style.display='flex';
+}
+
+// ── Render ───────────────────────────────────
+function renderDash(){
+  const co = CONFIG.company;
+  ['d-logo'].forEach(id => document.getElementById(id).textContent = co.name);
+  document.getElementById('ll-name').textContent = co.name;
+  document.getElementById('ll-sub').textContent = co.subtitle;
+  document.title = co.name + ' — Кабинет';
+
+  const all = getBookings();
+  const today = new Date().toISOString().split('T')[0];
+  const pending   = all.filter(b=>b.status==='pending').length;
+  const confirmed = all.filter(b=>b.status==='confirmed').length;
+  const done      = all.filter(b=>b.status==='done').length;
+  const todayCnt  = all.filter(b=>b.date===today).length;
+  const revenue   = all.filter(b=>b.status==='done')
+    .reduce((s,b)=>{ const m=(b.price||'').replace(/[^\d]/g,''); return s+(parseInt(m)||0); },0);
+
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card c-prim"><div class="stat-lbl">Всего</div><div class="stat-num">${all.length}</div><div class="stat-sub">записей</div></div>
+    <div class="stat-card c-warn"><div class="stat-lbl">Ожидают</div><div class="stat-num">${pending}</div><div class="stat-sub">нужно подтвердить</div></div>
+    <div class="stat-card c-blue"><div class="stat-lbl">Подтверждено</div><div class="stat-num">${confirmed}</div><div class="stat-sub">клиентов</div></div>
+    <div class="stat-card c-green"><div class="stat-lbl">Выполнено</div><div class="stat-num">${done}</div><div class="stat-sub">+${revenue.toLocaleString('ru')} ₽</div></div>
+    <div class="stat-card c-prim"><div class="stat-lbl">Сегодня</div><div class="stat-num">${todayCnt}</div><div class="stat-sub">${today}</div></div>`;
+
+  renderTable(all);
+}
+
+function renderTable(all){
+  const data = curFilter==='all' ? all : all.filter(b=>b.status===curFilter);
+  const tbody = document.getElementById('t-body');
+  if(!data.length){
+    tbody.innerHTML='<tr class="empty-row"><td colspan="9">Записей нет</td></tr>';
+    return;
+  }
+  const smap = {pending:['pending','Ожидает'],confirmed:['confirmed','Подтверждён'],done:['done','Выполнен'],cancelled:['cancelled','Отменён']};
+  tbody.innerHTML = data.map((b,i)=>{
+    const [cls,lbl] = smap[b.status]||smap.pending;
+    return `<tr>
+      <td style="color:var(--text3)">${i+1}</td>
+      <td><b>${esc(b.name)}</b><br><span style="font-size:11px;color:var(--text3)">${esc(b.created)}</span></td>
+      <td>${esc(b.phone)}</td>
+      <td>${esc(b.car)}<br><span style="font-size:11px;color:var(--text3)">${esc(b.carType||'')}</span></td>
+      <td>${esc(b.service)}</td>
+      <td style="color:var(--primary);font-family:var(--font-head)">${esc(b.price||'—')}</td>
+      <td>${esc(b.date)}${b.time?' '+esc(b.time):''}</td>
+      <td><span class="badge ${cls}">${lbl}</span></td>
+      <td>
+        ${b.status==='pending'?`<button class="act-btn" onclick="setStatus(${b.id},'confirmed')">✓</button>`:''}
+        ${b.status==='confirmed'?`<button class="act-btn" onclick="setStatus(${b.id},'done')">✅</button>`:''}
+        ${b.status!=='cancelled'?`<button class="act-btn" onclick="setStatus(${b.id},'cancelled')">✕</button>`:''}
+        <button class="act-btn del" onclick="delBooking(${b.id})">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function setFilter(f,btn){
+  curFilter=f;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable(getBookings());
+}
+
+function setStatus(id,status){
+  const bk=getBookings(); const idx=bk.findIndex(b=>b.id===id); if(idx<0)return;
+  bk[idx].status=status; saveBookings(bk); renderDash();
+  toast(status==='confirmed'?'Подтверждено':status==='done'?'Выполнено':'Отменено','ok');
+}
+
+function delBooking(id){
+  if(!confirm('Удалить запись?'))return;
+  saveBookings(getBookings().filter(b=>b.id!==id)); renderDash(); toast('Запись удалена','ok');
+}
+
+function clearAll(){
+  if(!confirm('Удалить ВСЕ записи? Действие необратимо.'))return;
+  saveBookings([]); renderDash(); toast('Все записи удалены','ok');
+}
+
+function exportCSV(){
+  const bk=getBookings();
+  if(!bk.length) return toast('Нет данных для экспорта','err');
+  const h=['#','Имя','Телефон','Авто','Тип авто','Услуга','Цена','Дата','Время','Статус','Создана'];
+  const rows=bk.map((b,i)=>[i+1,b.name,b.phone,b.car,b.carType||'',b.service,b.price||'',b.date,b.time||'',b.status,b.created]);
+  const csv=[h,...rows].map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download='bookings.csv'; a.click();
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+function toast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast '+type; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// Apply colors from config on login page
+(function(){
+  const cl=CONFIG.colors, r=document.documentElement;
+  const cm={bg:'--bg',bg2:'--bg2',bg3:'--bg3',card:'--card',border:'--border',primary:'--primary',primaryH:'--primary-h',danger:'--danger',text:'--text',text2:'--text2',text3:'--text3'};
+  Object.entries(cl).forEach(([k,v])=>{if(cm[k])r.style.setProperty(cm[k],v)});
+  document.getElementById('ll-name').textContent=CONFIG.company.name;
+  document.getElementById('ll-sub').textContent=CONFIG.company.subtitle;
+  document.title=CONFIG.company.name+' — Кабинет';
+})();
+</script>
+</body>
+</html>
