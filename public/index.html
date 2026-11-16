@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Загрузка…</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:    #111317;
+  --bg2:   #161920;
+  --bg3:   #1c1f27;
+  --card:  #1e2130;
+  --card2: #242838;
+  --b:     #2a2f3e;
+  --b2:    #353a4d;
+  --acc:   #3b82f6;
+  --acc-h: #60a5fa;
+  --grn:   #22c55e;
+  --warn:  #f59e0b;
+  --red:   #ef4444;
+  --t1:    #f1f5f9;
+  --t2:    #94a3b8;
+  --t3:    #4a5568;
+  --r:6px;
+  --ff:'Inter',system-ui,sans-serif;
+}
+html{color-scheme:dark;scroll-behavior:smooth}
+body{font-family:var(--ff);background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
+img{max-width:100%}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:60px;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(17,19,23,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--b);
+}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand-name{font-size:17px;font-weight:700;letter-spacing:.5px;color:var(--t1)}
+.nav-brand-dot{width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.nav-brand-sub{font-size:11px;color:var(--t3);letter-spacing:.3px}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-link{padding:7px 14px;border-radius:var(--r);font-size:13px;color:var(--t2);background:transparent;border:none;cursor:pointer;font-family:var(--ff);transition:all .18s;text-decoration:none;display:inline-block}
+.nav-link:hover{color:var(--t1);background:var(--bg3)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:100px 24px 72px;
+  background:
+    radial-gradient(ellipse 55% 45% at 70% 40%, rgba(59,130,246,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 20% 70%, rgba(34,197,94,.05) 0%, transparent 55%),
+    var(--bg);
+}
+.hero-inner{max-width:860px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.hero-left{}
+.hero-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--acc);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;margin-bottom:22px}
+.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(32px,4.5vw,52px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:16px;color:var(--t1)}
+.hero h1 span{color:var(--acc)}
+.hero-desc{font-size:15px;color:var(--t2);line-height:1.75;margin-bottom:32px;font-weight:300}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-prim{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--acc);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:var(--ff);transition:all .18s}
+.btn-prim:hover{background:var(--acc-h);transform:translateY(-1px)}
+.btn-prim svg{width:15px;height:15px;transition:transform .18s}
+.btn-prim:hover svg{transform:translateX(4px)}
+.btn-sec{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:transparent;color:var(--t2);border:1px solid var(--b2);border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--ff);transition:all .18s;text-decoration:none}
+.btn-sec:hover{border-color:var(--b2);color:var(--t1);background:var(--bg3)}
+
+.hero-cards{display:flex;flex-direction:column;gap:10px}
+.hero-chip{
+  background:var(--card);border:1px solid var(--b);border-radius:var(--r);
+  padding:12px 16px;display:flex;flex-direction:column;gap:2px;
+}
+.hchip-num{font-size:15px;font-weight:700;color:var(--t1)}
+.hchip-label{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px}
+
+/* ── SECTION ── */
+section.wrap{padding:88px 32px}
+.container{max-width:1080px;margin:0 auto}
+.sec-head{margin-bottom:40px}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.sec-label::before{content:'';display:inline-block;width:16px;height:1px;background:var(--acc)}
+.sec-title{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.5px;color:var(--t1)}
+.sec-sub{font-size:14px;color:var(--t2);margin-top:8px;line-height:1.6}
+
+/* ── PRICE TABLE ── */
+.price-section{background:var(--bg2)}
+.price-table-outer{background:var(--card);border:1px solid var(--b);border-radius:12px;overflow:hidden}
+table.pt{width:100%;border-collapse:collapse;min-width:580px}
+.pt thead{background:var(--bg3)}
+.pt thead tr{border-bottom:1px solid var(--b)}
+.pt th{padding:14px 20px;text-align:left;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3)}
+.pt th:not(:first-child){text-align:center}
+.pt td{padding:13px 20px;border-bottom:1px solid rgba(42,47,62,.7);font-size:14px;vertical-align:middle;color:var(--t2)}
+.pt td:not(:first-child){text-align:center;font-size:15px;font-weight:600;color:var(--t1)}
+.pt tr:last-child td{border-bottom:none}
+.pt tr:hover td{background:rgba(255,255,255,.02)}
+.pt tr.hl td{background:rgba(59,130,246,.04)}
+.pt tr.hl td:first-child{border-left:3px solid var(--acc)}
+.pt tr.hl td:not(:first-child){color:var(--acc-h)}
+.pt-name{font-size:14px;font-weight:500;color:var(--t1)}
+.pt-name b{color:var(--acc);font-weight:700}
+.pt-desc{font-size:12px;color:var(--t3);margin-top:3px;line-height:1.5}
+.price-wrap{display:flex;align-items:baseline;justify-content:center;gap:2px}
+.price-pre{font-size:10px;color:var(--t3);font-weight:400}
+.pt-scroll{overflow-x:auto}
+
+/* ── BOOKING ── */
+.booking-section{background:var(--bg)}
+.booking-layout{display:grid;grid-template-columns:380px 1fr;gap:48px;align-items:start}
+.booking-info{}
+.booking-info h3{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--t1)}
+.info-items{display:flex;flex-direction:column;gap:14px}
+.info-item{display:flex;gap:12px;align-items:flex-start;padding:14px;background:var(--card);border:1px solid var(--b);border-radius:var(--r)}
+.info-item-ic{width:34px;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(59,130,246,.1);color:var(--acc)}
+.info-item-ic svg{width:16px;height:16px}
+.info-item-label{font-size:11px;color:var(--t3);margin-bottom:3px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.info-item-val{font-size:14px;color:var(--t1);font-weight:500}
+
+/* FORM CARD */
+.form-card{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:28px}
+.form-top{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--b)}
+.form-top-ic{width:32px;height:32px;border-radius:6px;background:rgba(59,130,246,.1);display:flex;align-items:center;justify-content:center;color:var(--acc)}
+.form-top-ic svg{width:16px;height:16px}
+.form-top-title{font-size:16px;font-weight:700;color:var(--t1)}
+.form-top-sub{font-size:12px;color:var(--t3);margin-top:1px}
+
+/* CAR TYPE PICKER */
+.ct-row{display:flex;gap:8px;margin-bottom:20px}
+.ct-pill{flex:1;padding:9px 6px;text-align:center;border:1px solid var(--b);border-radius:var(--r);font-size:12px;font-weight:500;color:var(--t3);cursor:pointer;background:transparent;font-family:var(--ff);transition:all .18s}
+.ct-pill.on{border-color:var(--acc);color:var(--acc);background:rgba(59,130,246,.08)}
+
+/* SVC BANNER */
+.svc-banner{display:none;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:var(--r);margin-bottom:16px;font-size:13px}
+.svc-banner.on{display:flex}
+.sb-name{font-weight:600;color:var(--acc)}
+.sb-price{color:var(--t3);font-size:12px}
+
+/* FORM FIELDS */
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:12px;font-weight:500;color:var(--t2);margin-bottom:7px}
+.fg input,.fg select,.fg textarea{
+  width:100%;background:var(--bg3);border:1px solid var(--b);
+  color:var(--t1);padding:10px 13px;font-size:14px;font-family:var(--ff);
+  outline:none;border-radius:var(--r);transition:border-color .18s;-webkit-appearance:none;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(59,130,246,.5);box-shadow:0 0 0 3px rgba(59,130,246,.08)}
+.fg textarea{resize:vertical;min-height:80px}
+.fg select option{background:var(--bg3)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--t3)}
+
+.btn-submit{
+  width:100%;padding:13px;background:var(--acc);border:none;border-radius:var(--r);
+  color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--ff);
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:all .18s;
+}
+.btn-submit:hover{background:var(--acc-h);transform:translateY(-1px)}
+.btn-submit:active{transform:none}
+.btn-submit svg{width:15px;height:15px;transition:transform .18s}
+.btn-submit:hover svg{transform:translateX(4px)}
+
+/* SUCCESS */
+.success-box{display:none;text-align:center;padding:40px 24px}
+.success-box.on{display:block}
+.sbox-ic{width:52px;height:52px;border-radius:50%;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--grn)}
+.sbox-ic svg{width:22px;height:22px}
+.success-box h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.success-box p{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:24px}
+.btn-ghost{padding:9px 20px;background:transparent;border:1px solid var(--b2);border-radius:var(--r);color:var(--t2);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--ff);transition:all .18s}
+.btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+
+/* FOOTER */
+footer{padding:28px 32px;border-top:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.f-brand{display:flex;align-items:center;gap:8px}
+.f-brand-name{font-size:15px;font-weight:700}
+.f-brand-dot{width:6px;height:6px;border-radius:50%;background:var(--acc)}
+.f-copy{font-size:12px;color:var(--t3)}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;z-index:9999;padding:11px 16px;background:var(--card2);border:1px solid var(--b2);border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.5);transform:translateY(10px);opacity:0;transition:all .25s;pointer-events:none;max-width:300px}
+.toast.show{transform:none;opacity:1}
+.toast.ok{border-left:3px solid var(--grn)}
+.toast.err{border-left:3px solid var(--red)}
+
+/* ── GALLERY ── */
+.gallery-section{background:var(--bg2);padding:64px 20px}
+.gallery-outer{position:relative;max-width:600px;margin:0 auto}
+
+/* One card visible at a time — slides by JS class */
+.gallery-stage{
+  position:relative;overflow:hidden;
+  border-radius:14px;
+  background:var(--card);border:1px solid var(--b);
+}
+
+/* Before/After compare container */
+.ba-wrap{
+  position:relative;width:100%;
+  /* aspect ratio 4:3 on mobile, taller on desktop */
+  aspect-ratio:4/3;
+  overflow:hidden;
+  user-select:none;
+  touch-action:none;        /* block page-scroll during drag */
+  cursor:ew-resize;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Images — GPU layer for smooth drag */
+.ba-after,.ba-before{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block;
+  will-change:clip-path;
+  pointer-events:none;
+}
+/* BEFORE — always full, bottom layer */
+.ba-before{ z-index:1; }
+/* AFTER — clipped, revealed left→right by JS */
+.ba-after{
+  z-index:2;
+  clip-path:inset(0 100% 0 0); /* hidden at start */
+}
+
+/* Drag line */
+.ba-line{
+  position:absolute;top:0;bottom:0;
+  left:2%;                          /* starts at left edge */
+  width:3px;
+  background:#fff;
+  transform:translateX(-50%);
+  pointer-events:none;
+  will-change:left;
+  z-index:10;                       /* above both images */
+  box-shadow:0 0 12px rgba(0,0,0,.7);
+}
+.ba-handle{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:44px;height:44px;border-radius:50%;
+  background:#fff;
+  box-shadow:0 2px 20px rgba(0,0,0,.6);
+  display:flex;align-items:center;justify-content:center;
+  z-index:11;
+}
+.ba-handle svg{width:20px;height:20px;color:#111317;flex-shrink:0}
+
+/* Labels */
+.ba-label{
+  position:absolute;top:10px;
+  padding:3px 9px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.8px;
+  pointer-events:none;
+  z-index:9;
+}
+.ba-label.before{left:10px;background:rgba(0,0,0,.65);color:#ddd;border:1px solid rgba(255,255,255,.18)}
+.ba-label.after{right:10px;background:rgba(59,130,246,.55);color:#fff;border:1px solid rgba(59,130,246,.5)}
+
+/* Placeholder */
+.ba-placeholder{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;
+  background:var(--bg3);color:var(--t3);font-size:13px;text-align:center;padding:20px;
+}
+.ba-placeholder svg{width:36px;height:36px;opacity:.25}
+
+/* Card footer */
+.gcard-foot{
+  padding:12px 16px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--b);
+}
+.gcard-title{font-size:14px;font-weight:600;color:var(--t1)}
+.gcard-counter{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:6px}
+
+/* Dot indicators */
+.g-dots{display:flex;gap:5px;align-items:center}
+.g-dot{width:6px;height:6px;border-radius:50%;background:var(--b2);transition:background .2s,transform .2s}
+.g-dot.on{background:var(--acc);transform:scale(1.3)}
+
+/* Nav row — below card */
+.gallery-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:14px;
+}
+.gallery-nav-hint{font-size:12px;color:var(--t3)}
+.gallery-nav-btns{display:flex;gap:8px}
+.gnav-btn{
+  width:40px;height:40px;border-radius:var(--r);
+  border:1px solid var(--b2);background:var(--card);
+  color:var(--t2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s;-webkit-tap-highlight-color:transparent;
+}
+.gnav-btn:hover,.gnav-btn:active{border-color:var(--acc);color:var(--acc);background:rgba(59,130,246,.08)}
+.gnav-btn svg{width:18px;height:18px}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:40px}
+  .hero-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .booking-layout{grid-template-columns:1fr;gap:32px}
+  nav{padding:0 16px}
+  section.wrap{padding:64px 20px}
+  .hero{padding:90px 20px 60px}
+}
+@media(max-width:560px){
+  .f2{grid-template-columns:1fr}
+  .hero-cards{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+  .pt-scroll{margin:0 -20px;padding:0 20px}
+  /* Gallery full-width on mobile */
+  .gallery-section{padding:48px 0}
+  .gallery-section .container{padding:0 20px}
+  .gallery-outer{border-radius:0}
+  .gallery-stage{border-radius:0;border-left:none;border-right:none}
+  .gallery-nav{padding:0 20px}
+  .ba-wrap{aspect-ratio:3/2}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-dot"></div>
+    <div>
+      <div class="nav-brand-name" id="nav-name">АККУРАТНО</div>
+      <div class="nav-brand-sub" id="nav-sub">Автомойка & Детейлинг</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="scroll2('sec-gallery')">Работы</button>
+    <button class="nav-link" onclick="scroll2('sec-price')">Прайс</button>
+    <button class="nav-link" onclick="scroll2('sec-booking')">Запись</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left rv">
+      <div class="hero-pill">
+        <div class="hero-pill-dot"></div>
+        <span id="hero-pill-text">Принимаем заявки</span>
+      </div>
+      <h1 id="hero-h1">Профессиональный<br>уход за вашим<br><span>автомобилем</span></h1>
+      <p class="hero-desc" id="hero-desc">Загрузка…</p>
+      <div class="hero-btns">
+        <button class="btn-prim" onclick="scroll2('sec-price')">
+          Смотреть прайс
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="btn-sec" onclick="scroll2('sec-booking')">Записаться</button>
+      </div>
+    </div>
+    <div class="hero-cards rv" id="hero-cards"></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="sec-gallery">
+  <div class="container">
+    <div class="sec-head rv">
+      <div class="sec-label">Примеры работ</div>
+      <div class="sec-title">До и После</div>
+      <div class="sec-sub">Тяните ползунок влево-вправо</div>
+    </div>
+  </div>
+  <div class="gallery-outer rv">
+    <div class="gallery-stage" id="gallery-stage">
+      <!-- filled by JS -->
+    </div>
+    <div class="gallery-nav">
+      <div class="g-dots" id="g-dots"></div>
+      <div class="gallery-nav-btns">
+        <button class="gnav-btn" onclick="goPrev()" title="Назад">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="gnav-btn" onclick="goNext()" title="Вперёд">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE TABLE -->
+<section class="wrap price-section" id="sec-price">
+  <div class="container">
+    <div class="sec-head rv">
+      <div class="sec-label">Стоимость услуг</div>
+      <div class="sec-title">Прайс-лист</div>
+      <div class="sec-sub">Выберите услугу — нажмите чтобы записаться</div>
+    </div>
+    <div class="price-table-outer rv">
+      <div class="pt-scroll">
+        <table class="pt">
+          <thead>
+            <tr>
+              <th>Наименование услуги</th>
+              <th>Легковой</th>
+              <th>Кроссовер,<br>паркетник</th>
+              <th>Джип</th>
+            </tr>
+          </thead>
+          <tbody id="pt-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="wrap booking-section" id="sec-booking">
+  <div class="container">
+    <div class="booking-layout">
+      <div class="booking-info rv">
+        <div class="sec-head">
+          <div class="sec-label">Онлайн-запись</div>
+          <div class="sec-title">Запишитесь<br>онлайн</div>
+        </div>
+        <div class="info-items" id="b-contacts"></div>
+      </div>
+      <div class="rv">
+        <div class="form-card">
+          <div class="form-top">
+            <div class="form-top-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+            <div>
+              <div class="form-top-title">Новая запись</div>
+              <div class="form-top-sub">Заполните форму — мы перезвоним</div>
+            </div>
+          </div>
+          <div id="form-wrap">
+            <div style="margin-bottom:8px"><label style="font-size:12px;font-weight:500;color:var(--t2);margin-bottom:7px;display:block">Тип автомобиля</label></div>
+            <div class="ct-row" id="ct-row">
+              <button class="ct-pill on" data-idx="0" onclick="pickCT(this)">Легковой</button>
+              <button class="ct-pill" data-idx="1" onclick="pickCT(this)">Кроссовер</button>
+              <button class="ct-pill" data-idx="2" onclick="pickCT(this)">Джип</button>
+            </div>
+            <div class="svc-banner" id="svc-banner">
+              <span class="sb-name" id="sb-n"></span>
+              <span class="sb-price" id="sb-p"></span>
+            </div>
+            <div class="f2">
+              <div class="fg"><label>Имя *</label><input id="fi-name" type="text" placeholder="Иван Иванов" maxlength="60"></div>
+              <div class="fg"><label>Телефон *</label><input id="fi-phone" type="tel" placeholder="+7 900 000-00-00" maxlength="20"></div>
+            </div>
+            <div class="fg"><label>Марка и модель *</label><input id="fi-car" type="text" placeholder="Toyota Camry 2020" maxlength="60"></div>
+            <div class="fg"><label>Услуга</label><select id="fi-svc"></select></div>
+            <div class="f2">
+              <div class="fg"><label>Дата *</label><input id="fi-date" type="date"></div>
+              <div class="fg"><label>Время</label><select id="fi-time"></select></div>
+            </div>
+            <div class="fg"><label>Комментарий</label><textarea id="fi-cmt" placeholder="Пожелания, особенности…"></textarea></div>
+            <button class="btn-submit" onclick="submitBooking()">
+              Отправить заявку
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+          <div class="success-box" id="sbox">
+            <div class="sbox-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <h3>Заявка принята!</h3>
+            <p id="sbox-msg"></p>
+            <button class="btn-ghost" onclick="resetForm()">Новая запись</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-brand">
+    <div class="f-brand-dot"></div>
+    <div class="f-brand-name" id="f-name">АККУРАТНО</div>
+  </div>
+  <div class="f-copy" id="f-copy"></div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script>
+let ctIdx = 0;
+
+/* ── CSV helpers ─────────────────────────────── */
+function getCSV(){
+  return localStorage.getItem('dp_csv') || 'id,name,phone,car,carType,service,price,date,time,comment,status,created\n';
+}
+function appendCSV(row){
+  const cur = getCSV();
+  localStorage.setItem('dp_csv', cur + row + '\n');
+}
+function csvVal(v){ return '"' + String(v||'').replace(/"/g,'""') + '"'; }
+
+function getBookings(){
+  try{ return JSON.parse(localStorage.getItem('dp_bookings')||'[]'); }catch{ return []; }
+}
+function saveBookings(a){ localStorage.setItem('dp_bookings', JSON.stringify(a)); }
+
+/* ── Apply config ────────────────────────────── */
+function applyConfig(){
+  const C=CONFIG, co=C.company;
+  document.title = co.name + ' — Запись';
+  document.getElementById('nav-name').textContent = co.name;
+  document.getElementById('nav-sub').textContent  = co.subtitle;
+  document.getElementById('f-name').textContent   = co.name;
+  document.getElementById('f-copy').textContent   = '© ' + new Date().getFullYear() + ' ' + co.name;
+  document.getElementById('hero-desc').textContent = co.description;
+
+  /* hero stat chips */
+  document.getElementById('hero-cards').innerHTML =
+    `<div class="hero-chip"><span class="hchip-num">${C.services.length}</span><span class="hchip-label">услуг</span></div>`
+   +`<div class="hero-chip"><span class="hchip-num">${co.workHours}</span><span class="hchip-label">режим работы</span></div>`
+   +`<div class="hero-chip"><span class="hchip-num">${co.phone}</span><span class="hchip-label">телефон</span></div>`;
+
+  /* price table */
+  document.getElementById('pt-body').innerHTML = C.services.map(s=>{
+    const pp=s.pricePrefix||['','',''];
+    const cells=s.prices.map((p,i)=>`<td><div class="price-wrap"><span class="price-pre">${pp[i]||''}</span>${p.toLocaleString('ru')}</div></td>`).join('');
+    const nm=s.highlight?`<div class="pt-name"><b>${s.name}</b></div>`:`<div class="pt-name">${s.name}</div>`;
+    const dc=s.desc?`<div class="pt-desc">${s.desc}</div>`:'';
+    return `<tr class="${s.highlight?'hl':''}" style="cursor:pointer" onclick="pickSvc('${s.id}')"><td>${nm}${dc}</td>${cells}</tr>`;
+  }).join('');
+
+  /* service select */
+  document.getElementById('fi-svc').innerHTML =
+    '<option value="">— выберите услугу —</option>'
+    + C.services.map(s=>`<option value="${s.id}">${s.name}${s.desc?' ('+s.desc+')':''}</option>`).join('');
+
+  /* times */
+  document.getElementById('fi-time').innerHTML =
+    '<option value="">— выберите —</option>'
+    + C.timeSlots.map(t=>`<option>${t}</option>`).join('');
+
+  document.getElementById('fi-date').min = new Date().toISOString().split('T')[0];
+
+  /* contacts */
+  document.getElementById('b-contacts').innerHTML = [
+    {icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.18 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.92z"/></svg>`, label:'Телефон', val:co.phone},
+    {icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>`, label:'Адрес', val:co.address},
+    {icon:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`, label:'Режим работы', val:co.workHours},
+  ].map(x=>`<div class="info-item"><div class="info-item-ic">${x.icon}</div><div><div class="info-item-label">${x.label}</div><div class="info-item-val">${x.val}</div></div></div>`).join('');
+}
+
+/* ── Car type ─────────────────────────────────── */
+function pickCT(btn){
+  document.querySelectorAll('.ct-pill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  ctIdx = parseInt(btn.dataset.idx);
+  updateBanner();
+}
+
+function pickSvc(id){
+  const el = document.getElementById('fi-svc');
+  el.value = id;
+  updateBanner();
+  scroll2('sec-booking');
+}
+
+function updateBanner(){
+  const id = document.getElementById('fi-svc').value;
+  const s  = CONFIG.services.find(x=>x.id===id);
+  const bn = document.getElementById('svc-banner');
+  if(s){
+    const pp = (s.pricePrefix?.[ctIdx]||'');
+    document.getElementById('sb-n').textContent = s.name;
+    document.getElementById('sb-p').textContent = pp + s.prices[ctIdx].toLocaleString('ru') + ' ₽';
+    bn.classList.add('on');
+  } else {
+    bn.classList.remove('on');
+  }
+}
+
+/* ── Submit ──────────────────────────────────── */
+function submitBooking(){
+  const n  = document.getElementById('fi-name').value.trim();
+  const p  = document.getElementById('fi-phone').value.trim();
+  const c  = document.getElementById('fi-car').value.trim();
+  const d  = document.getElementById('fi-date').value;
+  const t  = document.getElementById('fi-time').value;
+  const sv = document.getElementById('fi-svc').value;
+  const cm = document.getElementById('fi-cmt').value.trim();
+  if(!n) return toast('Введите имя','err');
+  if(!p) return toast('Введите телефон','err');
+  if(!c) return toast('Укажите марку авто','err');
+  if(!d) return toast('Выберите дату','err');
+
+  const labels = ['Легковой','Кроссовер/паркетник','Джип'];
+  const sobj   = CONFIG.services.find(s=>s.id===sv);
+  const pp     = sobj?(sobj.pricePrefix?.[ctIdx]||''):'';
+  const price  = sobj ? pp + sobj.prices[ctIdx].toLocaleString('ru') + ' ₽' : '—';
+  const id     = Date.now();
+  const created= new Date().toLocaleString('ru');
+
+  /* save booking */
+  const bk = getBookings();
+  bk.unshift({id,name:n,phone:p,car:c,carType:labels[ctIdx],service:sobj?sobj.name:sv,price,date:d,time:t,comment:cm,status:'pending',created});
+  saveBookings(bk);
+
+  /* append CSV row */
+  appendCSV([id,n,p,c,labels[ctIdx],sobj?sobj.name:sv,price,d,t,cm,'pending',created].map(csvVal).join(','));
+
+  document.getElementById('form-wrap').style.display='none';
+  document.getElementById('sbox').classList.add('on');
+  document.getElementById('sbox-msg').textContent =
+    `${n}, заявка на${sobj?' «'+sobj.name+'»':''} ${d} принята. Тип: ${labels[ctIdx]}. Позвоним: ${p}`;
+}
+
+function resetForm(){
+  document.getElementById('form-wrap').style.display='block';
+  document.getElementById('sbox').classList.remove('on');
+  ['fi-name','fi-phone','fi-car','fi-date','fi-cmt'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fi-time').value='';
+  document.getElementById('fi-svc').value='';
+  document.querySelectorAll('.ct-pill').forEach((b,i)=>b.classList.toggle('on',i===0));
+  ctIdx=0;
+  document.getElementById('svc-banner').classList.remove('on');
+}
+
+function scroll2(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+function toast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast '+type; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+document.getElementById('fi-svc').addEventListener('change', updateBanner);
+
+/* ── GALLERY ─────────────────────────────────────────── */
+let _gItems = [];
+let _gIdx   = 0;
+
+function buildGallery(){
+  _gItems = CONFIG.gallery || [];
+  const stage = document.getElementById('gallery-stage');
+  if(!_gItems.length){ stage.closest('section').style.display='none'; return; }
+
+  // Build all cards (hidden), show first
+  stage.innerHTML = _gItems.map((item,idx) => `
+    <div class="ba-wrap" id="ba-${item.id}" style="${idx===0?'':'display:none'}">
+      <img class="ba-before" src="${item.before}"
+           onerror="this.style.opacity=0" alt="До" draggable="false" loading="lazy">
+      <img class="ba-after"  src="${item.after}"
+           onerror="this.style.opacity=0" alt="После" draggable="false" loading="lazy">
+      <div class="ba-placeholder" id="ba-ph-${item.id}" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 9l4-4 4 4 4-6 6 8"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+        </svg>
+        <span>Добавьте фото в папку<br>gallery/${item.id}.1.jpg</span>
+      </div>
+      <div class="ba-line" id="ba-line-${item.id}">
+        <div class="ba-handle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M8 12H3m0 0l3-3M3 12l3 3M16 12h5m0 0l-3-3m3 3l-3 3"/>
+          </svg>
+        </div>
+      </div>
+      <span class="ba-label before">ДО</span>
+      <span class="ba-label after" id="ba-after-lbl-${item.id}">ПОСЛЕ</span>
+    </div>
+    <div class="gcard-foot" id="gfoot-${item.id}" style="${idx===0?'':'display:none'}">
+      <div class="gcard-title">${item.title}</div>
+      <div class="gcard-counter">${idx+1} / ${_gItems.length}</div>
+    </div>
+  `).join('');
+
+  // Build dots
+  document.getElementById('g-dots').innerHTML =
+    _gItems.map((_,i)=>`<div class="g-dot${i===0?' on':''}" id="gdot-${i}" onclick="goTo(${i})"></div>`).join('');
+
+  // Attach drag to each wrap + set initial position = far left
+  _gItems.forEach((item,idx) => {
+    const wrap = document.getElementById('ba-'+item.id);
+    if(!wrap) return;
+    wrap.addEventListener('mousedown',  e => baStart(e, item.id));
+    wrap.addEventListener('touchstart', e => baStart(e, item.id), {passive:false});
+    // Start at left edge — only BEFORE visible
+    if(idx===0) baSetPct(item.id, 0.02);
+  });
+}
+
+/* ── Navigate ── */
+function goTo(idx){
+  const prev = _gItems[_gIdx];
+  const next = _gItems[idx];
+  if(!prev||!next||prev.id===next.id) return;
+
+  // Hide old
+  const prevWrap = document.getElementById('ba-'+prev.id);
+  const prevFoot = document.getElementById('gfoot-'+prev.id);
+  if(prevWrap) prevWrap.style.display='none';
+  if(prevFoot) prevFoot.style.display='none';
+  document.getElementById('gdot-'+_gIdx)?.classList.remove('on');
+
+  // Show new
+  _gIdx = idx;
+  const nextWrap = document.getElementById('ba-'+next.id);
+  const nextFoot = document.getElementById('gfoot-'+next.id);
+  if(nextWrap) nextWrap.style.display='';
+  if(nextFoot) nextFoot.style.display='';
+  document.getElementById('gdot-'+_gIdx)?.classList.add('on');
+
+  // Reset slider to left edge — start showing BEFORE
+  baSetPct(next.id, 0.02);
+}
+
+function goNext(){ goTo((_gIdx+1) % _gItems.length); }
+function goPrev(){ goTo((_gIdx-1+_gItems.length) % _gItems.length); }
+
+/* ── Drag (rAF-throttled) ── */
+const _ba = { active:false, id:null, raf:null, x:0 };
+
+function baStart(e, id){
+  e.preventDefault();
+  _ba.active = true;
+  _ba.id = id;
+  _ba.x = e.touches ? e.touches[0].clientX : e.clientX;
+  baSchedule();
+  document.addEventListener('mousemove',  baMoveDoc);
+  document.addEventListener('mouseup',    baEnd);
+  document.addEventListener('touchmove',  baMoveDoc, {passive:false});
+  document.addEventListener('touchend',   baEnd);
+}
+
+function baMoveDoc(e){
+  if(!_ba.active) return;
+  e.preventDefault();
+  _ba.x = e.touches ? e.touches[0].clientX : e.clientX;
+  baSchedule();
+}
+
+function baSchedule(){
+  if(_ba.raf) return;
+  _ba.raf = requestAnimationFrame(()=>{
+    _ba.raf = null;
+    if(!_ba.active||!_ba.id) return;
+    const wrap = document.getElementById('ba-'+_ba.id);
+    if(!wrap) return;
+    const rect = wrap.getBoundingClientRect();
+    let pct = (_ba.x - rect.left) / rect.width;
+    pct = Math.max(0.02, Math.min(0.98, pct));
+    baSetPct(_ba.id, pct);
+  });
+}
+
+function baSetPct(id, pct){
+  // pct=0 → only BEFORE visible; pct=1 → only AFTER visible
+  const afterClip = ((1-pct)*100).toFixed(2); // right clip of AFTER
+  const linePct   = (pct*100).toFixed(2);
+  const after = document.querySelector(`#ba-${id} .ba-after`);
+  const line  = document.getElementById('ba-line-'+id);
+  if(after) after.style.clipPath = `inset(0 ${afterClip}% 0 0)`;
+  if(line)  line.style.left = linePct+'%';
+}
+
+function baEnd(){
+  _ba.active = false;
+  cancelAnimationFrame(_ba.raf); _ba.raf = null;
+  document.removeEventListener('mousemove',  baMoveDoc);
+  document.removeEventListener('mouseup',    baEnd);
+  document.removeEventListener('touchmove',  baMoveDoc);
+  document.removeEventListener('touchend',   baEnd);
+}
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+applyConfig();
+buildGallery();
+</script>
+</body>
+</html>
