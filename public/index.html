@@ -2,8 +2,19 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Загрузка…</title>
+<meta name="theme-color" content="#111317">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="АККУРАТНО">
+<meta property="og:type" content="website">
+<meta property="og:title" content="АККУРАТНО — Автомойка &amp; Детейлинг">
+<meta property="og:description" content="Запись на автомойку и детейлинг онлайн.">
+<meta property="og:image" content="/icons/icon-512.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>АККУРАТНО — Автомойка &amp; Детейлинг</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -783,6 +794,74 @@ document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
 applyConfig();
 buildGallery();
+
+/* ── PWA: Service Worker ─────────────── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(r => console.log('[SW] ok:', r.scope))
+      .catch(e => console.log('[SW] err:', e));
+  });
+}
+
+/* ── PWA: Install banner ─────────────── */
+let _deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _deferredPrompt = e;
+  if (!window.matchMedia('(display-mode: standalone)').matches) {
+    document.getElementById('pwa-banner')?.classList.add('show');
+  }
+});
+window.addEventListener('appinstalled', () => {
+  document.getElementById('pwa-banner')?.classList.remove('show');
+  _deferredPrompt = null;
+});
+function installPWA() {
+  if (!_deferredPrompt) return;
+  _deferredPrompt.prompt();
+  _deferredPrompt.userChoice.then(() => {
+    _deferredPrompt = null;
+    document.getElementById('pwa-banner')?.classList.remove('show');
+  });
+}
+function closePWA() {
+  document.getElementById('pwa-banner')?.classList.remove('show');
+}
+
 </script>
+
+<!-- PWA Install Banner -->
+<div id="pwa-banner" style="
+  position:fixed;bottom:0;left:0;right:0;z-index:9000;
+  background:#1e2130;border-top:1px solid #2a2f3e;
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+">
+<style>
+  #pwa-banner.show { transform: translateY(0) !important; }
+</style>
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="/icons/icon-192.png" width="40" height="40"
+         style="border-radius:10px;flex-shrink:0"
+         onerror="this.style.display='none'">
+    <div>
+      <div style="font-size:14px;font-weight:600;color:#f1f5f9">Установить приложение</div>
+      <div style="font-size:12px;color:#4a5568;margin-top:1px">Работает без интернета</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-shrink:0">
+    <button onclick="closePWA()" style="
+      padding:7px 14px;border-radius:6px;border:1px solid #2a2f3e;
+      background:transparent;color:#4a5568;font-size:13px;cursor:pointer;font-family:inherit;
+    ">Не сейчас</button>
+    <button onclick="installPWA()" style="
+      padding:7px 16px;border-radius:6px;border:none;
+      background:#3b82f6;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;
+    ">Установить</button>
+  </div>
+</div>
+
 </body>
 </html>
